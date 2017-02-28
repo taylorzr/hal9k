@@ -7,7 +7,7 @@ module Hal9k
       def long; end
 
       # TODO: Better naming?!?!?
-      def command(name)
+      def register(name)
         Hal9k::Commands.register(name, self)
       end
 
@@ -22,14 +22,18 @@ module Hal9k
       def flags
         @flags ||= []
       end
+
+      def root
+        ROOT
+      end
     end
 
     def call
+      raise NotImplementedError
     end
 
-    attr_reader :arguments, :flags
+    attr_reader :arguments, :flags, :command_names
 
-    # TODO: Add command path
     def initialize(arguments, flags, command_names)
       @arguments     = arguments
       @flags         = flags

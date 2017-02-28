@@ -6,16 +6,23 @@ module Hal9k
       end
 
       def parse(argv)
+        # TODO: Root command
         # TODO: Nested commands
         # TODO: Can flags come before some commands?!?
         argv = argv.dup
-        command_name = argv.shift.to_sym
 
-        if commands.key?(command_name)
+        if commands.key?(argv.first)
+          command_name = argv.shift.to_sym
           {
-            command_names: command_name,
+            command_names: [command_name],
             argv:          argv,
             command:       commands[command_name]
+          }
+        elsif commands.key?(ROOT)
+          {
+            command_names: [],
+            argv:          argv,
+            command:       commands[ROOT]
           }
         end
       end

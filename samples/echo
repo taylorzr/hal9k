@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'hal9k'
+
+class Echo < Hal9k::Command
+  register root
+  # See virtus for type handling
+  # How can we safely get Boolean instead of Hal9k::Boolean
+  # or just use symbols? yea prolly
+  # and also support custom classes
+  flag :new_line, :n, type: Hal9k::Boolean, default: true
+
+  def call
+    print string
+  end
+
+  def string
+    string = arguments.join(' ')
+    string += "\n" if flags[:new_line]
+    string
+  end
+end
+
+Hal9k.start
