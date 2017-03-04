@@ -34,7 +34,7 @@ module Hal9k
 
       def defaults_for(flags)
         Hash[
-          flags.map do |flag|
+          flags.select(&:default?).map do |flag|
             [flag.long, flag.default]
           end
         ]
