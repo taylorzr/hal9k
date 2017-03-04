@@ -68,18 +68,18 @@ module Hal9k
         # end
         segment = argv.shift
 
-        flag = flags.find { |flag| flag.matches?(segment) }
+        matching_flag = flags.find { |flag| flag.matches?(segment) }
 
-        raise StandardError, "No matching flag for #{segment}" unless flag
+        raise StandardError, "No matching flag for #{segment}" unless matching_flag
 
-        key = flag.long
+        key = matching_flag.long
 
-        if argv.first && flag.matching_value?(argv.first)
+        if argv.first && matching_flag.matching_value?(argv.first)
           value_segment = argv.shift
-          value = flag.coerce(value_segment)
+          value = matching_flag.coerce(value_segment)
         else
-          raise StandardError, "No value provided for #{segment}" unless flag.default?
-          value = flag.default
+          raise StandardError, "No value provided for #{segment}" unless matching_flag.default?
+          value = matching_flag.default
         end
 
         { key => value }
