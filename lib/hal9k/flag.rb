@@ -29,7 +29,7 @@ module Hal9k
 
     attr_reader :short, :long, :default
 
-    def appropriate_value?(_value)
+    def matching_value?(_value)
       raise NotImplementedError
     end
 
