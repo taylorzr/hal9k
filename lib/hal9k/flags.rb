@@ -6,11 +6,15 @@ module Hal9k
   module Flags
     class << self
       def parse(argv, flags)
+        # TODO:
         # expand_short_flag_groups
+        
+        # TODO:
+        # Invert default value for boolean when short flag present
 
         result = {
           arguments: [],
-          flags: {}
+          flags:     defaults_for(flags)
         }
 
         until argv.empty?
@@ -27,6 +31,14 @@ module Hal9k
       end
 
       private
+
+      def defaults_for(flags)
+        Hash[
+          flags.map do |flag|
+            [flag.long, flag.default]
+          end
+        ]
+      end
 
       # def expand_short_flag_groups
       #   self.segments = segments.map do |segment|

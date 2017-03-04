@@ -1,3 +1,9 @@
+show help but exit with 1 status when mis-used
+show help and exit with 0 status when help menu calledo
+
+consider having Namespace or Group or something in addition to commands
+like a command that can't be called
+
 # argv =[
 #   '-f', 'some_flag_value',     # flag with value separated by space
 #    '-fsome_flag_value',        # flag with value no separation
