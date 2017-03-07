@@ -11,7 +11,7 @@ module Heroku
     # - Or you can just mount commands to it in the case you don't have
     #   any root flags
     class Root < Hal9k::Command
-      mount Hal9k.root
+      mount root
 
       # Default to cascading scope (non local)
       flag :application, :a, local: false

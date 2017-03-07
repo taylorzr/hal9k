@@ -8,13 +8,12 @@ module Hal9k
       def short; end
       def long; end
 
-      def mount(command)
-        self.supercommand = command
-
-        if command == :hal9k
-          Hal9k::Commands.mount(self)
+      def mount(at)
+        if at == :hal9k_root
+          Hal9k.root = self
         else
-          command.subcommands << self
+          self.supercommand = at
+          at.subcommands << self
         end
       end
 
@@ -40,7 +39,7 @@ module Hal9k
       end
 
       def root
-        ROOT
+        :hal9k_root
       end
 
       private

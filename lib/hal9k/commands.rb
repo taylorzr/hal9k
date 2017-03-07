@@ -12,7 +12,7 @@ module Hal9k
         argv = argv.dup
 
         command_path = []
-        command = subcommands.first
+        command = Hal9k.root
 
         loop do
           break unless argv.first

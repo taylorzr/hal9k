@@ -3,18 +3,15 @@ require 'hal9k/flag'
 require 'hal9k/flags'
 require 'hal9k/command'
 require 'hal9k/commands'
+require 'hal9k/root'
 
 # TODO Need to exclude spec if sticking with pattern of spec next to
 # unit
 # Dir.glob(File.join(__dir__, 'directory', '**', '*.rb')).each { |file| require file }
 
 module Hal9k
-  ROOT = :hal9k
-
   class << self
-    def root
-      :hal9k
-    end
+    attr_accessor :root
 
     def start(argv = ARGV)
       # TODO: raise helpful error if no commands, or no commands match
