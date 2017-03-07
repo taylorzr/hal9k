@@ -1,8 +1,8 @@
 module Hal9k
   class Commands
     class << self
-      def register(name, command)
-        commands[name.to_sym] = command
+      def mount(command)
+        subcommands << command
       end
 
       def parse(argv)
@@ -11,26 +11,33 @@ module Hal9k
         # TODO: Can flags come before some commands?!?
         argv = argv.dup
 
-        if commands.key?(argv.first)
-          command_name = argv.shift.to_sym
-          {
-            command_names: [command_name],
-            argv:          argv,
-            command:       commands[command_name]
-          }
-        elsif commands.key?(ROOT)
-          {
-            command_names: [],
-            argv:          argv,
-            command:       commands[ROOT]
-          }
+        command_path = []
+        command = subcommands.first
+
+        loop do
+          break unless argv.first
+
+          subcommand = command.subcommands.find do |subcommand|
+            subcommand.endpoint.include? argv.first
+          end
+
+          break unless subcommand
+
+          command = subcommand
+          command_path << argv.shift
         end
+
+        {
+          command_names: command_path,
+          argv:          argv,
+          command:       command
+        }
       end
 
       private
 
-      def commands
-        @commands ||= {}
+      def subcommands
+        @subcommands ||= []
       end
     end
   end

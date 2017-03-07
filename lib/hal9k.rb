@@ -12,6 +12,10 @@ module Hal9k
   ROOT = :hal9k
 
   class << self
+    def root
+      :hal9k
+    end
+
     def start(argv = ARGV)
       # TODO: raise helpful error if no commands, or no commands match
       # TODO: maybe show help instead but exit with 1 status

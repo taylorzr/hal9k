@@ -2,8 +2,8 @@ require 'active_support/core_ext/string'
 
 module Hal9k
   class Flag
-    SHORT_FLAG_REGEXP = /\A-{1}(?!-)/
-    LONG_FLAG_REGEXP  = /\A-{2}(?!-)/
+    SHORT_FLAG_REGEXP = /\A-{1}(?!-)\w/
+    LONG_FLAG_REGEXP  = /\A-{2}(?!-)\w{2,}/
 
     class << self
       def flag_string?(string)

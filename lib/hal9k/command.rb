@@ -1,3 +1,5 @@
+require 'active_support/core_ext/string'
+
 module Hal9k
   class Command
     class << self
@@ -6,12 +8,17 @@ module Hal9k
       def short; end
       def long; end
 
-      # TODO: Better naming?!?!?
-      def register(name)
-        Hal9k::Commands.register(name, self)
+      def mount(command)
+        self.supercommand = command
+
+        if command == :hal9k
+          Hal9k::Commands.mount(self)
+        else
+          command.subcommands << self
+        end
       end
 
-      def flag(long, short = nil, type: String, default: nil, scope: :local)
+      def flag(long, short = nil, type: String, default: nil, local: false)
         flag = type.new(short: short, long: long, default: default)
         flags << flag
         flag
@@ -19,12 +26,35 @@ module Hal9k
 
       def run; end
 
+      def endpoint
+        @endpoint ||= name.demodulize.underscore
+      end
+
+      def subcommands
+        @subcommands ||= []
+      end
+
       def flags
-        @flags ||= []
+        # NOTE: How should we handle over-writing flags
+        @flags ||= superflags
       end
 
       def root
         ROOT
+      end
+
+      private
+
+      attr_accessor :supercommand
+
+      def superflags
+        # TODO: Get rid of != hal9k check after we set a default root
+        # command
+        @superflags ||= if supercommand && supercommand != :hal9k
+          supercommand.flags
+        else
+          []
+        end
       end
     end
 

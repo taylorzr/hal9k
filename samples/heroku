@@ -1,0 +1,75 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'hal9k'
+
+module Heroku
+  module Cli
+    # Maybe Hal9k has a default root namespace?
+    # - And you can override it, in this case giving Heroku root which
+    #   defines flags
+    # - Or you can just mount commands to it in the case you don't have
+    #   any root flags
+    class Root < Hal9k::Command
+      mount Hal9k.root
+
+      # Default to cascading scope (non local)
+      flag :application, :a, local: false
+
+      def call
+        puts '-> heroku'
+      end
+    end
+
+    class Status < Hal9k::Command
+      mount Root
+
+      def call
+        puts '-> heroku status'
+      end
+    end
+
+    class Config < Hal9k::Command
+      mount Root
+
+      # Maybe allow one command to handle mutiple paths
+      # All the flags would need to be the same
+      # register :get,   with: self
+      # register :set,   with: self
+      # register :unset, with: self
+
+      def call
+        puts '-> heroku config'
+      end
+
+      class Get < Hal9k::Command
+        mount Config
+        # register :get, with: Config
+
+        def call
+          puts '-> heroku config get'
+        end
+      end
+
+      class Set < Hal9k::Command
+        mount Config
+        # register :set, with: Config
+
+        def call
+          puts '-> heroku config set'
+        end
+      end
+
+      class Unset < Hal9k::Command
+        mount Config
+        # register :unset, with: Config
+
+        def call
+          puts '-> heroku config unset'
+        end
+      end
+    end
+  end
+end
+
+Hal9k.start
