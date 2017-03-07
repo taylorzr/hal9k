@@ -4,25 +4,16 @@ require 'bundler/setup'
 require 'hal9k'
 
 module Heroku
-  module Cli
-    # Maybe Hal9k has a default root namespace?
-    # - And you can override it, in this case giving Heroku root which
-    #   defines flags
-    # - Or you can just mount commands to it in the case you don't have
-    #   any root flags
-    class Root < Hal9k::Command
-      mount root
+  class Cli < Hal9k::Command
+    # Default to cascading scope (non local)
+    flag :application, :a, local: false
 
-      # Default to cascading scope (non local)
-      flag :application, :a, local: false
-
-      def call
-        puts '-> heroku'
-      end
+    def call
+      puts '-> heroku'
     end
 
     class Status < Hal9k::Command
-      mount Root
+      mount Cli
 
       def call
         puts '-> heroku status'
@@ -30,7 +21,7 @@ module Heroku
     end
 
     class Config < Hal9k::Command
-      mount Root
+      mount Cli
 
       # Maybe allow one command to handle mutiple paths
       # All the flags would need to be the same
@@ -72,4 +63,4 @@ module Heroku
   end
 end
 
-Hal9k.start
+Heroku::Cli.start

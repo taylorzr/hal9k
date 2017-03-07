@@ -22,4 +22,4 @@ class Echo < Hal9k::Command
   end
 end
 
-Hal9k.start
+Echo.start

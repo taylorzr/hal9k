@@ -42,6 +42,10 @@ module Hal9k
         :hal9k_root
       end
 
+      def start(argv = ARGV)
+        Hal9k.start(self, argv)
+      end
+
       private
 
       attr_accessor :supercommand

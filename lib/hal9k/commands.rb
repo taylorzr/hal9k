@@ -5,14 +5,12 @@ module Hal9k
         subcommands << command
       end
 
-      def parse(argv)
-        # TODO: Root command
-        # TODO: Nested commands
+      def parse(root, argv)
         # TODO: Can flags come before some commands?!?
         argv = argv.dup
 
         command_path = []
-        command = Hal9k.root
+        command = root
 
         loop do
           break unless argv.first
