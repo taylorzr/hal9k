@@ -1,10 +1,10 @@
 module Hal9k
   module Arguments
     class << self
-      def valid?(command, arguments)
-        method = command.instance_method(:call)
-        # TODO: Support optional or splat
-        arguments.count == method.arity
+      def parse(argv, arguments)
+        argv.map.with_index do |arg, index|
+          arguments[index].parse(arg)
+        end
       end
     end
   end

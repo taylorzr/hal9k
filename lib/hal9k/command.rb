@@ -18,9 +18,7 @@ module Hal9k
       end
 
       def argument(name, type: Hal9k::String)
-        # TODO: lookup type somehow
-        # TODO: Create an argument class
-        argument = :do_something
+        argument = Argument.new(name, type: type)
         arguments << argument
         argument
       end
@@ -77,9 +75,10 @@ module Hal9k
       raise NotImplementedError
     end
 
-    attr_reader :flags, :command_names
+    attr_reader :arguments, :flags, :command_names
 
-    def initialize(flags, command_names)
+    def initialize(arguments, flags, command_names)
+      @arguments     = arguments
       @flags         = flags
       @command_names = command_names
     end

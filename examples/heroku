@@ -57,8 +57,10 @@ module Heroku
         mount Config
         # register :get, with: Config
 
-        def call(variable)
-          puts "-> heroku config get #{variable.upcase}"
+        argument :variable, type: Hal9k::String
+
+        def call
+          puts "-> heroku config get #{arguments.first.upcase}"
         end
       end
 
@@ -66,8 +68,13 @@ module Heroku
         mount Config
         # register :set, with: Config
 
+        argument :variable_and_value
+
+        # TODO: Support multiple arguments
+        # arguments :variables_and_values, count: :*
+
         def call(*key_values)
-          puts "-> heroku config set #{key_values.join ' '}"
+          puts "-> heroku config set #{arguments.join(' ')}"
         end
       end
 

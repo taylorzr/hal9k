@@ -15,7 +15,10 @@ module Math
       argument :y, type: Hal9k::Integer
 
       def call
-        arguments[:x] + arguments[:y]
+        puts arguments.first + arguments.last
+        # TODO: support the following
+        # puts argument.first + arguments.last
+        # puts arguments[:x] + arguments[:y]
       end
     end
 

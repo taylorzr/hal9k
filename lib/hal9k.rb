@@ -1,4 +1,5 @@
 require 'hal9k/version'
+require 'hal9k/argument'
 require 'hal9k/arguments'
 require 'hal9k/flag'
 require 'hal9k/flags'
@@ -19,19 +20,17 @@ module Hal9k
       # TODO: maybe show help instead but exit with 1 status
       command, arguments = translate(root, argv)
 
-      command.call(*arguments)
+      command.call
     end
 
     def translate(root, argv)
       command, argv, path = Hal9k::Commands.parse(root, argv)
 
-      arguments, flags = Hal9k::Flags.parse(argv, command.flags)
+      argv, flags = Hal9k::Flags.parse(argv, command.flags)
 
-      # unless Hal9k::Arguments.valid?(command, arguments)
-      #   raise StandardError, 'Arguments not valid'
-      # end
+      arguments = Hal9k::Arguments.parse(argv, command.arguments)
 
-      [command.new(flags, path), arguments]
+      command.new(arguments, flags, path)
     end
   end
 end
