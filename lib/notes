@@ -1,7 +1,30 @@
-show help but exit with 1 status when mis-used
-show help and exit with 0 status when help menu calledo
+- show help but exit with 1 status when mis-used
 
-consider having Namespace or Group or something in addition to commands
+- show help and exit with 0 status when help menu calledo
+
+- capital of short flag boolean should by default invert the boolean, or
+at least allow this behavior
+
+- allow configuring a flag to be used multiple times, e.g. ack
+  --ignore-directory=foo --ignore-directory=bar
+    maybe something like
+    module Ack
+      module Cli
+        flag :ignore_directory, type: String, multiple: true
+        flag :ignore_directory, type: String, allow_multiple: true
+
+        or
+
+        flags :ignore_directory, type: String # where the plural of flags would mean it accepts multiple
+
+- Should arguments cascade?
+
+- change subcommands dsl from .mount to .mount_to, or .mount_at
+  or have the supercommand mount the subcommand, but this would be a
+  problem when loading because we'd be trying to mount subcommands that
+  probably aren't loaded yet
+
+- consider having Namespace or Group or something in addition to commands
 like a command that can't be called
 
 # argv =[

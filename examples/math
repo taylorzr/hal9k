@@ -1,0 +1,47 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'hal9k'
+
+module Math
+  class Cli < Hal9k::Command
+    mount root
+
+    # E.g. examples/math add 1 2 3
+    class AddTwo < Hal9k::Command
+      mount Cli
+
+      argument :x, type: Hal9k::Integer
+      argument :y, type: Hal9k::Integer
+
+      def call
+        arguments[:x] + arguments[:y]
+      end
+    end
+
+    # E.g. examples/math add 1 2 3 4
+    class AddAny < Hal9k::Command
+      mount Cli
+
+      # Should count be a thing, or just always mean any number
+      # arguments :integers, type: Hal9k::Integer, count: :*
+
+      def call
+        arguments[:integers].reduce(:+)
+      end
+    end
+
+    class AddOnePlusRest < Hal9k::Command
+      mount Cli
+
+      argument :x, type: Hal9k::Integer
+      # arguments :rest, type: Hal9k::Integer
+
+      def call
+        arguments[:rest].reduce(arguments[:x], :+)
+      end
+    end
+  end
+end
+
+Math::Cli.start

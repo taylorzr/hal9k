@@ -11,14 +11,10 @@ class Echo < Hal9k::Command
   # and also support custom classes
   flag :new_line, :n, type: Hal9k::Boolean, default: true
 
-  def call
-    print string
-  end
-
-  def string
+  def call(*arguments)
     string = arguments.join(' ')
     string += "\n" if flags[:new_line]
-    string
+    print string
   end
 end
 

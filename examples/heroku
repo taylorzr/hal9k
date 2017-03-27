@@ -3,6 +3,26 @@
 require 'bundler/setup'
 require 'hal9k'
 
+# Maybe support a dsl after the non-dsl setup is working
+# Hal9k.cli do
+#   flag :application, :a
+#   run { puts '-> heroku' }
+
+#   command :status do
+#     run { puts '-> heroku status' }
+#   end
+
+#   command :config do
+#     command :get do
+#       run(variable) { puts "-> heroku config get #{variable}" }
+#     end
+
+#     command :set do
+#       run(*variables) { puts "-> heroku config set #{variables.join(' ')}" }
+#     end
+#   end
+# end
+
 module Heroku
   class Cli < Hal9k::Command
     # Default to cascading scope (non local)
@@ -37,8 +57,8 @@ module Heroku
         mount Config
         # register :get, with: Config
 
-        def call
-          puts '-> heroku config get'
+        def call(variable)
+          puts "-> heroku config get #{variable.upcase}"
         end
       end
 
@@ -46,8 +66,8 @@ module Heroku
         mount Config
         # register :set, with: Config
 
-        def call
-          puts '-> heroku config set'
+        def call(*key_values)
+          puts "-> heroku config set #{key_values.join ' '}"
         end
       end
 

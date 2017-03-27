@@ -1,6 +1,7 @@
 # TODO: require glob
 require_relative 'flags/boolean'
 require_relative 'flags/string'
+require_relative 'flags/integer'
 
 module Hal9k
   module Flags
@@ -8,26 +9,23 @@ module Hal9k
       def parse(argv, flags)
         # TODO:
         # expand_short_flag_groups
-        
+
         # TODO:
         # Invert default value for boolean when short flag present
 
-        result = {
-          arguments: [],
-          flags:     defaults_for(flags)
-        }
+        arguments, options = [], defaults_for(flags)
 
         until argv.empty?
           if Flag.flag_string?(argv.first)
             # TODO: Convert to not mutate
             flag = parse_flag(argv, flags)
-            result[:flags].merge!(flag)
+            options.merge!(flag)
           else
-            result[:arguments] << argv.shift
+            arguments << argv.shift
           end
         end
 
-        result
+        [arguments, options]
       end
 
       private

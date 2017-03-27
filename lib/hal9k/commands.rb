@@ -1,10 +1,6 @@
 module Hal9k
   class Commands
     class << self
-      def mount(command)
-        subcommands << command
-      end
-
       def parse(root, argv)
         # TODO: Can flags come before some commands?!?
         argv = argv.dup
@@ -25,17 +21,7 @@ module Hal9k
           command_path << argv.shift
         end
 
-        {
-          command_names: command_path,
-          argv:          argv,
-          command:       command
-        }
-      end
-
-      private
-
-      def subcommands
-        @subcommands ||= []
+        [command, argv, command_path]
       end
     end
   end

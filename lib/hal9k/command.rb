@@ -17,6 +17,14 @@ module Hal9k
         end
       end
 
+      def argument(name, type: Hal9k::String)
+        # TODO: lookup type somehow
+        # TODO: Create an argument class
+        argument = :do_something
+        arguments << argument
+        argument
+      end
+
       def flag(long, short = nil, type: String, default: nil, local: false)
         flag = type.new(short: short, long: long, default: default)
         flags << flag
@@ -31,6 +39,10 @@ module Hal9k
 
       def subcommands
         @subcommands ||= []
+      end
+
+      def arguments
+        @arguments ||= []
       end
 
       def flags
@@ -65,10 +77,9 @@ module Hal9k
       raise NotImplementedError
     end
 
-    attr_reader :arguments, :flags, :command_names
+    attr_reader :flags, :command_names
 
-    def initialize(arguments, flags, command_names)
-      @arguments     = arguments
+    def initialize(flags, command_names)
       @flags         = flags
       @command_names = command_names
     end
