@@ -15,12 +15,6 @@ module Hal9k
   class << self
     attr_accessor :root
 
-    def start(root, argv = ARGV)
-      # TODO: raise helpful error if no commands, or no commands match
-      # TODO: maybe show help instead but exit with 1 status
-      translate(root, argv).call
-    end
-
     def translate(root, argv)
       command, argv, path = Hal9k::Commands.parse(root, argv)
 

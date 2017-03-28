@@ -51,7 +51,7 @@ module Hal9k
       end
 
       def start(argv = ARGV)
-        Hal9k.start(self, argv)
+        Hal9k.translate(self, argv).call
       end
 
       private
