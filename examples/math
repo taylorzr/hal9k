@@ -26,22 +26,23 @@ module Math
     class AddAny < Hal9k::Command
       mount Cli
 
-      # Should count be a thing, or just always mean any number
-      # arguments :integers, type: Hal9k::Integer, count: :*
+      argument :integers, type: Hal9k::Integer, count: :*
+      # TODO: support plural arguments that default to unlimited count
+      # argumets :integers, type: Hal9k::Integer
 
       def call
-        arguments[:integers].reduce(:+)
+        puts arguments.reduce(:+)
       end
     end
 
-    class AddOnePlusRest < Hal9k::Command
+    class LabelAdd < Hal9k::Command
       mount Cli
 
-      argument :x, type: Hal9k::Integer
-      # arguments :rest, type: Hal9k::Integer
+      argument :label, type: Hal9k::String
+      argument :rest, type: Hal9k::Integer, count: :*
 
       def call
-        arguments[:rest].reduce(arguments[:x], :+)
+        puts "#{arguments.first} #{arguments[1..-1].reduce(:+)}"
       end
     end
   end

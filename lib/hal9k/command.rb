@@ -17,8 +17,8 @@ module Hal9k
         end
       end
 
-      def argument(name, type: String)
-        argument = Argument.new(name, type: type)
+      def argument(name, type: String, count: 1)
+        argument = Argument.new(name, type: type, count: count)
         arguments << argument
         argument
       end

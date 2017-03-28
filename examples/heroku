@@ -68,12 +68,9 @@ module Heroku
         mount Config
         # register :set, with: Config
 
-        argument :variable_and_value
+        argument :variables, count: :*
 
-        # TODO: Support multiple arguments
-        # arguments :variables_and_values, count: :*
-
-        def call(*key_values)
+        def call
           puts "-> heroku config set #{arguments.join(' ')}"
         end
       end
@@ -82,8 +79,10 @@ module Heroku
         mount Config
         # register :unset, with: Config
 
+        argument :variables, count: :*
+
         def call
-          puts '-> heroku config unset'
+          puts "-> heroku config unset #{arguments.join(' ')}"
         end
       end
     end

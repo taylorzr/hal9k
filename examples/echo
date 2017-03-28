@@ -11,10 +11,9 @@ class Echo < Hal9k::Command
   # and also support custom classes
   flag :new_line, :n, type: Hal9k::Boolean, default: true
 
-  # TODO: Support multiple arguments
-  # arguments :anything, count: :*
+  argument :anything, count: :*
 
-  def call(*arguments)
+  def call
     string = arguments.join(' ')
     string += "\n" if flags[:new_line]
     print string
