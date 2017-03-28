@@ -57,7 +57,7 @@ module Heroku
         mount Config
         # register :get, with: Config
 
-        argument :variable, type: Hal9k::String
+        argument :variable
 
         def call
           puts "-> heroku config get #{arguments.first.upcase}"
@@ -68,7 +68,7 @@ module Heroku
         mount Config
         # register :set, with: Config
 
-        argument :variables, count: :*
+        arguments :variables
 
         def call
           puts "-> heroku config set #{arguments.join(' ')}"
@@ -79,7 +79,7 @@ module Heroku
         mount Config
         # register :unset, with: Config
 
-        argument :variables, count: :*
+        arguments :variables
 
         def call
           puts "-> heroku config unset #{arguments.join(' ')}"

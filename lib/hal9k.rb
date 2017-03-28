@@ -18,17 +18,15 @@ module Hal9k
     def start(root, argv = ARGV)
       # TODO: raise helpful error if no commands, or no commands match
       # TODO: maybe show help instead but exit with 1 status
-      command, arguments = translate(root, argv)
-
-      command.call
+      translate(root, argv).call
     end
 
     def translate(root, argv)
       command, argv, path = Hal9k::Commands.parse(root, argv)
 
-      argv, flags = Hal9k::Flags.parse(argv, command.flags)
+      argv, flags = Hal9k::Flags.parse(argv, command.hal9k_flags)
 
-      arguments = Hal9k::Arguments.parse(argv, command.arguments)
+      arguments = Hal9k::Arguments.parse(argv, command.hal9k_arguments)
 
       command.new(arguments, flags, path)
     end

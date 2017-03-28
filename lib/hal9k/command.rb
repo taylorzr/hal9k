@@ -18,18 +18,16 @@ module Hal9k
       end
 
       def argument(name, type: String, count: 1)
-        argument = Argument.new(name, type: type, count: count)
-        arguments << argument
-        argument
+        hal9k_arguments << Argument.new(name, type: type, count: count)
+      end
+
+      def arguments(name, type: String)
+        argument(name, type: type, count: :*)
       end
 
       def flag(long, short = nil, type: String, default: nil, local: false)
-        flag = Flag.new(short: short, long: long, default: default, type: type)
-        flags << flag
-        flag
+        hal9k_flags << Flag.new(short: short, long: long, default: default, type: type)
       end
-
-      def run; end
 
       def endpoint
         @endpoint ||= name.demodulize.underscore
@@ -39,13 +37,13 @@ module Hal9k
         @subcommands ||= []
       end
 
-      def arguments
-        @arguments ||= []
+      def hal9k_arguments
+        @hal9k_arguments ||= []
       end
 
-      def flags
+      def hal9k_flags
         # NOTE: How should we handle over-writing flags
-        @flags ||= superflags
+        @hal9k_flags ||= _superflags
       end
 
       def root
@@ -60,11 +58,11 @@ module Hal9k
 
       attr_accessor :supercommand
 
-      def superflags
+      def _superflags
         # TODO: Get rid of != hal9k check after we set a default root
         # command
-        @superflags ||= if supercommand && supercommand != :hal9k
-          supercommand.flags
+        @_superflags ||= if supercommand && supercommand != :hal9k
+          supercommand.hal9k_flags
         else
           []
         end
