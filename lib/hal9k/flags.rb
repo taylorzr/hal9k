@@ -1,7 +1,4 @@
-# TODO: require glob
-require_relative 'flags/boolean'
-require_relative 'flags/string'
-require_relative 'flags/integer'
+require_relative 'types'
 
 module Hal9k
   module Flags
@@ -72,9 +69,9 @@ module Hal9k
 
         key = matching_flag.long
 
-        if argv.first && matching_flag.matching_value?(argv.first)
+        if argv.first && matching_flag.type.matching_value?(argv.first)
           value_segment = argv.shift
-          value = matching_flag.coerce(value_segment)
+          value = matching_flag.type.coerce(value_segment)
         else
           raise StandardError, "No value provided for #{segment}" unless matching_flag.default?
           value = matching_flag.default

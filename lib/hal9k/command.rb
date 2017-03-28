@@ -17,14 +17,14 @@ module Hal9k
         end
       end
 
-      def argument(name, type: Hal9k::String)
+      def argument(name, type: String)
         argument = Argument.new(name, type: type)
         arguments << argument
         argument
       end
 
       def flag(long, short = nil, type: String, default: nil, local: false)
-        flag = type.new(short: short, long: long, default: default)
+        flag = Flag.new(short: short, long: long, default: default, type: type)
         flags << flag
         flag
       end

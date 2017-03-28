@@ -21,13 +21,14 @@ module Hal9k
       end
     end
 
-    def initialize(short:, long:, default: nil)
+    def initialize(short:, long:, default: nil, type: Hal9k::String)
       @short   = short
       @long    = long
       @default = default
+      @type    = type
     end
 
-    attr_reader :short, :long, :default
+    attr_reader :short, :long, :default, :type
 
     def matching_value?(_value)
       raise NotImplementedError
