@@ -2,7 +2,6 @@ describe Hal9k do
   describe '.translate' do
     it 'translates command line arguments to a command' do
       class Echo < Hal9k::Command
-        register root
         # See virtus for type handling
         # How can we safely get Boolean instead of Hal9k::Boolean
         # or just use symbols? yea prolly

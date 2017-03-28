@@ -5,7 +5,6 @@ require 'hal9k/flag'
 require 'hal9k/flags'
 require 'hal9k/command'
 require 'hal9k/commands'
-require 'hal9k/root'
 
 # TODO Need to exclude spec if sticking with pattern of spec next to
 # unit
@@ -13,10 +12,8 @@ require 'hal9k/root'
 
 module Hal9k
   class << self
-    attr_accessor :root
-
-    def translate(root, argv)
-      command, argv, path = Hal9k::Commands.parse(root, argv)
+    def translate(root_command, argv)
+      command, argv, path = Hal9k::Commands.parse(root_command, argv)
 
       argv, flags = Hal9k::Flags.parse(argv, command.hal9k_flags)
 

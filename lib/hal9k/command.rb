@@ -9,12 +9,8 @@ module Hal9k
       def long; end
 
       def mount(at)
-        if at == :hal9k_root
-          Hal9k.root = self
-        else
-          self.supercommand = at
-          at.subcommands << self
-        end
+        self.supercommand = at
+        at.subcommands << self
       end
 
       def argument(name, type: String, count: 1)
@@ -46,10 +42,6 @@ module Hal9k
         @hal9k_flags ||= _superflags
       end
 
-      def root
-        :hal9k_root
-      end
-
       def start(argv = ARGV)
         Hal9k.translate(self, argv).call
       end
@@ -59,9 +51,7 @@ module Hal9k
       attr_accessor :supercommand
 
       def _superflags
-        # TODO: Get rid of != hal9k check after we set a default root
-        # command
-        @_superflags ||= if supercommand && supercommand != :hal9k
+        @_superflags ||= if supercommand
           supercommand.hal9k_flags
         else
           []

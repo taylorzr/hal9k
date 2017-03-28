@@ -1,12 +1,12 @@
 module Hal9k
   class Commands
     class << self
-      def parse(root, argv)
+      def parse(root_command, argv)
         # TODO: Can flags come before some commands?!?
         argv = argv.dup
 
         command_path = []
-        command = root
+        command = root_command
 
         loop do
           break unless argv.first

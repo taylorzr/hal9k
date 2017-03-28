@@ -4,7 +4,6 @@ require 'bundler/setup'
 require 'hal9k'
 
 class Echo < Hal9k::Command
-  mount root
   # See virtus for type handling
   # How can we safely get Boolean instead of Hal9k::Boolean
   # or just use symbols? yea prolly

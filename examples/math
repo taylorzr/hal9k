@@ -5,8 +5,6 @@ require 'hal9k'
 
 module Math
   class Cli < Hal9k::Command
-    mount root
-
     # E.g. examples/math add 1 2 3
     class AddTwo < Hal9k::Command
       mount Cli
