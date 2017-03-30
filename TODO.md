@@ -1,10 +1,8 @@
+### TODO
+
 [ ] argument validation (arity)
 
 [ ] access arguments as array or hash
-
-[ ] maybe reverse mount, so you mount a subcommand to a supercommand
-    like Root.mount SubCommand instead of SubCommand.mount Root
-    or at least SubCommand should be mount_to Root
 
 [ ] flags with = just the same as <SPACE>
 
@@ -12,7 +10,31 @@
 
 [ ] combined short flags
 
+[ ] show help but exit with 1 status when mis-used
+
+[ ] show help and exit with 0 status when help menu called
+
+[ ] capital of short flag boolean should by default invert the boolean, or
+at least allow this behavior
+
+[ ] allow configuring a flag to be used multiple times, e.g. ack
+    --ignore-directory=foo --ignore-directory=bar
+    maybe something like
+    module Ack
+    module Cli
+    flag :ignore_directory, type: String, multiple: true
+    flag :ignore_directory, type: String, allow_multiple: true
+
+    or
+
+    flags :ignore_directory, type: String # where the plural of flags would mean it accepts multiple
+
+[ ] consider having Namespace or Group or something in addition to commands
+like a command that can't be called
+
 ---
+
+### DONE
 
 [x] cascading flags (still need tests)
 
@@ -35,3 +57,7 @@ Use this extracted type matcher/coercer with Arguments as well
 
 [x] change command class methods flags/arguments so that we can use
 these method names in the dsl
+
+[x] ~~maybe reverse mount, so you mount a subcommand to a supercommand
+like Root.mount SubCommand instead of SubCommand.mount Root
+or at least~~ SubCommand should be mount_to Root
