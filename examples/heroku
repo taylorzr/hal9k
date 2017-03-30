@@ -33,7 +33,7 @@ module Heroku
     end
 
     class Status < Hal9k::Command
-      mount Cli
+      mount_to Cli
 
       def call
         puts '-> heroku status'
@@ -41,7 +41,7 @@ module Heroku
     end
 
     class Config < Hal9k::Command
-      mount Cli
+      mount_to Cli
 
       # Maybe allow one command to handle mutiple paths
       # All the flags would need to be the same
@@ -54,7 +54,7 @@ module Heroku
       end
 
       class Get < Hal9k::Command
-        mount Config
+        mount_to Config
         # register :get, with: Config
 
         argument :variable
@@ -65,7 +65,7 @@ module Heroku
       end
 
       class Set < Hal9k::Command
-        mount Config
+        mount_to Config
         # register :set, with: Config
 
         arguments :variables
@@ -76,7 +76,7 @@ module Heroku
       end
 
       class Unset < Hal9k::Command
-        mount Config
+        mount_to Config
         # register :unset, with: Config
 
         arguments :variables

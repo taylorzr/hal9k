@@ -7,7 +7,7 @@ module Math
   class Cli < Hal9k::Command
     # E.g. examples/math add 1 2 3 4
     class Add < Hal9k::Command
-      mount Cli
+      mount_to Cli
 
       argument :integers, type: Hal9k::Integer, count: :*
       # TODO: support plural arguments that default to unlimited count
@@ -20,7 +20,7 @@ module Math
 
     # E.g. examples/math add 1 2 3
     class AddOnlyTwo < Hal9k::Command
-      mount Cli
+      mount_to Cli
 
       argument :x, type: Hal9k::Integer
       argument :y, type: Hal9k::Integer
@@ -34,7 +34,7 @@ module Math
     end
 
     class LabelAdd < Hal9k::Command
-      mount Cli
+      mount_to Cli
 
       argument :label, type: Hal9k::String
       argument :rest, type: Hal9k::Integer, count: :*

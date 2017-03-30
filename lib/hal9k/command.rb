@@ -8,7 +8,7 @@ module Hal9k
       def short; end
       def long; end
 
-      def mount(at)
+      def mount_to(at)
         self.supercommand = at
         at.subcommands << self
       end
