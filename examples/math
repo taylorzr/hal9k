@@ -5,20 +5,16 @@ require 'hal9k'
 
 module Math
   class Cli < Hal9k::Command
-    # E.g. examples/math add 1 2 3 4
     class Add < Hal9k::Command
       mount_to Cli
 
-      argument :integers, type: Hal9k::Integer, count: :*
-      # TODO: support plural arguments that default to unlimited count
-      # argumets :integers, type: Hal9k::Integer
+      arguments :integers, type: Hal9k::Integer
 
       def call
         puts arguments.reduce(:+)
       end
     end
 
-    # E.g. examples/math add 1 2 3
     class AddOnlyTwo < Hal9k::Command
       mount_to Cli
 
@@ -40,7 +36,7 @@ module Math
       argument :rest, type: Hal9k::Integer, count: :*
 
       def call
-        puts "#{arguments.first} #{arguments[1..-1].reduce(:+)}"
+        puts "#{arguments.first}#{arguments[1..-1].reduce(:+)}"
       end
     end
   end
