@@ -43,7 +43,8 @@ module Hal9k
       end
 
       def start(argv = ARGV)
-        Hal9k.translate(self, argv).call
+        command = Translate.call(self, argv)
+        command.call
       end
 
       private

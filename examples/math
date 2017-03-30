@@ -42,6 +42,7 @@ module Math
       def call
         puts "#{arguments.first} #{arguments[1..-1].reduce(:+)}"
       end
+    end
   end
 end
 

@@ -1,3 +1,19 @@
+[ ] argument validation (arity)
+
+[ ] access arguments as array or hash
+
+[ ] maybe reverse mount, so you mount a subcommand to a supercommand
+    like Root.mount SubCommand instead of SubCommand.mount Root
+    or at least SubCommand should be mount_to Root
+
+[ ] flags with = just the same as <SPACE>
+
+[ ] short flag inverts boolean
+
+[ ] combined short flags
+
+---
+
 [x] cascading flags (still need tests)
 
 [x] default root command/namespace that can be overidden
@@ -17,19 +33,5 @@ Use this extracted type matcher/coercer with Arguments as well
 
 [x] argument(s) & types
 
-[ ] access arguments as array or hash
-
-[ ] change command class methods flags/arguments so that we can use
+[x] change command class methods flags/arguments so that we can use
 these method names in the dsl
-
-[ ] argument validation (arity)
-
-[ ] maybe reverse mount, so you mount a subcommand to a supercommand
-    like Root.mount SubCommand instead of SubCommand.mount Root
-    or at least SubCommand should be mount_to Root
-
-[ ] flags with = just the same as <SPACE>
-
-[ ] short flag inverts boolean
-
-[ ] combined short flags
