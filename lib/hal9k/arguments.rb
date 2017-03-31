@@ -14,7 +14,8 @@ module Hal9k
       def pair(argv, arguments)
         paired_arguments = []
 
-        # TODO: Handle a mix of count & *, and guard against misuse
+        # TODO: Guard against single argument after splat, or another
+        # splat after splat
         arguments.each do |argument|
           if argument.count == :*
             argv.each do |arg|

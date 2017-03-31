@@ -30,20 +30,12 @@ module Hal9k
 
     attr_reader :short, :long, :default, :type
 
-    def matching_value?(_value)
-      raise NotImplementedError
-    end
-
     def matches?(flag_string)
       flag_string == short_string || flag_string == long_string
     end
 
     def default?
       !default.nil?
-    end
-
-    def coerce(value)
-      raise NotImplementedError
     end
 
     private
