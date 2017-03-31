@@ -12,6 +12,16 @@ module Hal9k
 
         arguments, options = [], defaults_for(flags)
 
+        # TODO: Maybe iterate over known flags and extract flags and
+        # values, you would then be left with potential unknown flags,
+        # and arguments
+        # The advantage would be that we could emit a error containing
+        # all uknown flags
+        # --
+        # Hmn, could do the same still iterating of argv but I think
+        # iterating over flags makes more sense because this is the flag
+        # parsing method, and all we really care about are flags, not
+        # all the argv input
         until argv.empty?
           if Flag.flag_string?(argv.first)
             # TODO: Convert to not mutate

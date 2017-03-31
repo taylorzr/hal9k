@@ -1,5 +1,7 @@
 ### TODO
 
+[ ] flag validation
+
 [ ] argument validation (arity)
 
 [ ] access arguments as array or hash
