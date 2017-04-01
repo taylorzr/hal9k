@@ -10,29 +10,28 @@ module Hal9k
         # TODO:
         # Invert default value for boolean when short flag present
 
-        arguments, options = [], defaults_for(flags)
+        # TODO: Maybe create a result object
+        result = {
+          flags: defaults_for(flags),
+          argv:  [],
+          found: [],
+          errors: {
+            unknown:       [],
+            missing_value: [],
+            duplicate:     []
+          }
+        }
 
-        # TODO: Maybe iterate over known flags and extract flags and
-        # values, you would then be left with potential unknown flags,
-        # and arguments
-        # The advantage would be that we could emit a error containing
-        # all uknown flags
-        # --
-        # Hmn, could do the same still iterating of argv but I think
-        # iterating over flags makes more sense because this is the flag
-        # parsing method, and all we really care about are flags, not
-        # all the argv input
         until argv.empty?
           if Flag.flag_string?(argv.first)
-            # TODO: Convert to not mutate
-            flag = parse_flag(argv, flags)
-            options.merge!(flag)
+            argv = extract(argv, flags, result)
           else
-            arguments << argv.shift
+            segment, *argv = *argv
+            result[:argv] << segment
           end
         end
 
-        [arguments, options]
+        result
       end
 
       private
@@ -55,39 +54,37 @@ module Hal9k
       #   end.flatten
       # end
 
-      def parse_flag(argv, flags)
-        # Get first segment
-        # If it starts with -/--
-        #   Match it to a flag
-        #   if doesn't match
-        #     Error flag mismatch
-        #   else
-        #     set flags long value as key
-        #     Match the next segment to a value for the flag
-        #     if it matches
-        #       coerce to type and set as value
-        #     else
-        #       Error if a value is required for the flag
-        #     end
-        #   end
-        # end
-        segment = argv.shift
+      def extract(argv, flags, result)
+        flag_segment, *argv = *argv
 
-        matching_flag = flags.find { |flag| flag.matches?(segment) }
+        matching_flag = flags.find { |flag| flag.matches?(flag_segment) }
 
-        raise StandardError, "No matching flag for #{segment}" unless matching_flag
-
-        key = matching_flag.long
-
-        if argv.first && matching_flag.type.matching_value?(argv.first)
-          value_segment = argv.shift
-          value = matching_flag.type.coerce(value_segment)
-        else
-          raise StandardError, "No value provided for #{segment}" unless matching_flag.default?
-          value = matching_flag.default
+        unless matching_flag
+          result[:errors][:unknown] << flag_segment
+          return argv
         end
 
-        { key => value }
+        if result[:found].include?(matching_flag)
+          result[:errors][:duplicate] << matching_flag
+        else
+          result[:found] << matching_flag
+        end
+
+        has_value = argv.first && !Flag.flag_string?(argv.first) && matching_flag.type.matching_value?(argv.first)
+
+        if has_value
+          value_segment, *argv = *argv
+          value = matching_flag.type.coerce(value_segment)
+          result[:flags].merge!(matching_flag.long => value)
+        else
+          if matching_flag.default?
+            result[:flags].merge!(matching_flag.long => matching_flag.default)
+          else
+            result[:errors][:missing_value] << flag_segment
+          end
+        end
+
+        argv
       end
     end
   end

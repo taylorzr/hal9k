@@ -26,7 +26,7 @@ require 'hal9k'
 module Heroku
   class Cli < Hal9k::Command
     # Default to cascading scope (non local)
-    flag :application, :a, local: false
+    flag :application, :a
 
     def call
       puts '-> heroku'
@@ -36,7 +36,7 @@ module Heroku
       mount_to Cli
 
       def call
-        puts '-> heroku status'
+        puts "Showing status of #{flags[:application]}"
       end
     end
 
@@ -50,7 +50,7 @@ module Heroku
       # register :unset, with: self
 
       def call
-        puts '-> heroku config'
+        puts "Getting config of #{flags[:application]}"
       end
 
       class Get < Hal9k::Command
@@ -60,7 +60,7 @@ module Heroku
         argument :variable
 
         def call
-          puts "-> heroku config get #{arguments.first.upcase}"
+          puts "Getting #{arguments.first.upcase} from application #{flags[:application]}"
         end
       end
 
@@ -71,7 +71,7 @@ module Heroku
         arguments :variables
 
         def call
-          puts "-> heroku config set #{arguments.join(' ')}"
+          puts "Setting #{arguments.inspect} on #{flags[:application]}"
         end
       end
 
@@ -82,7 +82,7 @@ module Heroku
         arguments :variables
 
         def call
-          puts "-> heroku config unset #{arguments.join(' ')}"
+          puts "Unsetting #{arguments.inspect} on #{flags[:application]}"
         end
       end
     end
