@@ -48,18 +48,12 @@ module Hal9k
           return argv
         end
 
-        if result.found.include?(matching_flag)
-          result.add_duplicate(matching_flag)
-        else
-          # result[:found] << matching_flag
-        end
-
         has_value = argv.first && !Flag.flag_string?(argv.first) && matching_flag.type.matching_value?(argv.first)
 
         if has_value
           value_segment, *argv = *argv
           value = matching_flag.type.coerce(value_segment)
-          result.add_flag(matching_flag, value)
+          result.add_option(matching_flag, value)
         else
           if matching_flag.default?
             value = matching_flag.default
@@ -74,7 +68,7 @@ module Hal9k
             #   echo -n # Equivalent to --no-new-line
             value = !value if matching_flag.type == Boolean
 
-            result.add_flag(matching_flag, value)
+            result.add_option(matching_flag, value)
           else
             result.add_missing_value(flag_segment)
           end
