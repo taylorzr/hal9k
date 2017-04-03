@@ -8,8 +8,6 @@
 
 [ ] flags with = just the same as <SPACE>
 
-[ ] short flag inverts boolean
-
 [ ] combined short flags
 
 [ ] show help but exit with 1 status when mis-used
@@ -63,3 +61,5 @@ these method names in the dsl
 [x] ~~maybe reverse mount, so you mount a subcommand to a supercommand
 like Root.mount SubCommand instead of SubCommand.mount Root
 or at least~~ SubCommand should be mount_to Root
+
+[x] short flag inverts boolean

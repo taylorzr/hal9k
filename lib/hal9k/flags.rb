@@ -1,4 +1,5 @@
 require_relative 'types'
+require_relative 'flags/result'
 
 module Hal9k
   module Flags
@@ -10,28 +11,19 @@ module Hal9k
         # TODO:
         # Invert default value for boolean when short flag present
 
-        # TODO: Maybe create a result object
-        result = {
-          flags: defaults_for(flags),
-          argv:  [],
-          found: [],
-          errors: {
-            unknown:       [],
-            missing_value: [],
-            duplicate:     []
-          }
-        }
+        remaining_argv = []
+        result = Result.new(defaults_for(flags))
 
         until argv.empty?
           if Flag.flag_string?(argv.first)
             argv = extract(argv, flags, result)
           else
             segment, *argv = *argv
-            result[:argv] << segment
+            remaining_argv << segment
           end
         end
 
-        result
+        [remaining_argv, result]
       end
 
       private
@@ -60,14 +52,14 @@ module Hal9k
         matching_flag = flags.find { |flag| flag.matches?(flag_segment) }
 
         unless matching_flag
-          result[:errors][:unknown] << flag_segment
+          result.add_unknown(flag_segment)
           return argv
         end
 
-        if result[:found].include?(matching_flag)
-          result[:errors][:duplicate] << matching_flag
+        if result.found.include?(matching_flag)
+          result.add_duplicate(matching_flag)
         else
-          result[:found] << matching_flag
+          # result[:found] << matching_flag
         end
 
         has_value = argv.first && !Flag.flag_string?(argv.first) && matching_flag.type.matching_value?(argv.first)
@@ -75,12 +67,16 @@ module Hal9k
         if has_value
           value_segment, *argv = *argv
           value = matching_flag.type.coerce(value_segment)
-          result[:flags].merge!(matching_flag.long => value)
+          result.add_flag(matching_flag, value)
         else
           if matching_flag.default?
-            result[:flags].merge!(matching_flag.long => matching_flag.default)
+            value = matching_flag.default
+
+            value = !value if matching_flag.type == Boolean
+
+            result.add_flag(matching_flag, value)
           else
-            result[:errors][:missing_value] << flag_segment
+            result.add_missing_value(flag_segment)
           end
         end
 
