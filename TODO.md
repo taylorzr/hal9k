@@ -1,5 +1,7 @@
 ### TODO
 
+[ ] long boolean "no" prefix, e.g. --no-new-line
+
 [ ] flag validation
 
 [ ] argument validation (arity)

@@ -72,6 +72,14 @@ module Hal9k
           if matching_flag.default?
             value = matching_flag.default
 
+            # TODO: This requires a bit more though
+            # Should both long and short invert the boolean
+            # Long inversion is kinda weird, e.g.
+            #   echo --new-line # Englishwise, this reads as yes newline
+            # So maybe
+            #   echo --no-new-line
+            # And only short inverts
+            #   echo -n # Equivalent to --no-new-line
             value = !value if matching_flag.type == Boolean
 
             result.add_flag(matching_flag, value)
