@@ -10,7 +10,7 @@ module Hal9k
 
         arguments = Arguments.parse(argv, command.hal9k_arguments)
 
-        command.new(arguments, result.flags, path)
+        command.new(arguments, result.options, path)
       end
     end
   end

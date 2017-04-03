@@ -34,6 +34,10 @@ module Hal9k
       flag_string == short_string || flag_string == long_string
     end
 
+    def requires_value?
+      default.nil?
+    end
+
     def default?
       !default.nil?
     end

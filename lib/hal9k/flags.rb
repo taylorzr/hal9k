@@ -12,7 +12,7 @@ module Hal9k
         # Invert default value for boolean when short flag present
 
         remaining_argv = []
-        result = Result.new(defaults_for(flags))
+        result = Result.new(flags)
 
         until argv.empty?
           if Flag.flag_string?(argv.first)
@@ -27,14 +27,6 @@ module Hal9k
       end
 
       private
-
-      def defaults_for(flags)
-        Hash[
-          flags.select(&:default?).map do |flag|
-            [flag.long, flag.default]
-          end
-        ]
-      end
 
       # def expand_short_flag_groups
       #   self.segments = segments.map do |segment|

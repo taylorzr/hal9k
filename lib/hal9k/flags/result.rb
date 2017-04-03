@@ -1,19 +1,20 @@
 module Hal9k
   module Flags
     class Result
-      attr_reader :flags, :found, :unknown, :missing_value, :duplicate
+      attr_reader :flags, :options, :found, :duplicate, :missing, :missing_value, :unknown
 
-      def initialize(defaults)
-        @flags         = defaults
+      def initialize(flags)
+        @flags         = flags
+        @options       = defaults
         @found         = []
-        @unknown       = []
-        @missing_value = []
         @duplicate     = []
+        @missing_value = []
+        @unknown       = []
       end
 
       def add_flag(matching_flag, value)
         found << matching_flag
-        flags.merge!(matching_flag.long => value)
+        options.merge!(matching_flag.long => value)
       end
 
       def add_unknown(segment)
@@ -26,6 +27,24 @@ module Hal9k
 
       def add_duplicate(flag)
         duplicate << flag
+      end
+
+      def missing
+        required - found
+      end
+
+      private
+
+      def required
+        flags.select(&:requires_value?)
+      end
+
+      def defaults
+        Hash[
+          flags.select(&:default?).map do |flag|
+            [flag.long, flag.default]
+          end
+        ]
       end
     end
   end

@@ -26,7 +26,7 @@ module Hal9k
       end
 
       def endpoint
-        @endpoint ||= name.demodulize.underscore
+        @endpoint ||= name.demodulize.underscore.dasherize
       end
 
       def subcommands
