@@ -10,8 +10,6 @@ module Hal9k
         short_flag_string?(string) || long_flag_string?(string)
       end
 
-      private
-
       def short_flag_string?(string)
         string.match(SHORT_FLAG_REGEXP)
       end
@@ -31,7 +29,8 @@ module Hal9k
     attr_reader :short, :long, :default, :type
 
     def matches?(flag_string)
-      flag_string == short_string || flag_string == long_string
+      flag_string == short_string || flag_string == long_string ||
+        (type == Boolean && flag_string == inverse_long_string)
     end
 
     def requires_value?
@@ -44,13 +43,16 @@ module Hal9k
 
     private
 
-    # TODO: Dasherize short/long
     def short_string
       "-#{short}".dasherize
     end
 
     def long_string
       "--#{long}".dasherize # TODO: "--no-#{long}"
+    end
+
+    def inverse_long_string
+      "--no-#{long}".dasherize
     end
   end
 end

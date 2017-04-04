@@ -8,9 +8,6 @@ module Hal9k
         # TODO:
         # expand_short_flag_groups
 
-        # TODO:
-        # Invert default value for boolean when short flag present
-
         remaining_argv = []
         result = Result.new(flags)
 
@@ -66,7 +63,11 @@ module Hal9k
             #   echo --no-new-line
             # And only short inverts
             #   echo -n # Equivalent to --no-new-line
-            value = !value if matching_flag.type == Boolean
+            if matching_flag.type == Boolean
+              if Flag.short_flag_string?(flag_segment) || (Flag.long_flag_string?(flag_segment) && flag_segment.start_with?('--no'))
+                value = !value
+              end
+            end
 
             result.add_option(matching_flag, value)
           else

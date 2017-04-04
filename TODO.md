@@ -1,7 +1,5 @@
 ### TODO
 
-[ ] long boolean "no" prefix, e.g. --no-new-line
-
 [ ] flag validation
 
 [ ] argument validation (arity)
@@ -65,3 +63,5 @@ like Root.mount SubCommand instead of SubCommand.mount Root
 or at least~~ SubCommand should be mount_to Root
 
 [x] short flag inverts boolean
+
+[x] long boolean "no" prefix, e.g. --no-new-line
