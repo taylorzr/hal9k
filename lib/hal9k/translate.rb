@@ -4,7 +4,7 @@ module Hal9k
       def call(root_command, argv)
         command, argv, path = Commands.parse(root_command, argv)
 
-        argv, result = Flags.parse(argv, command.hal9k_flags)
+        argv, result = Flags::Parse.call(argv, command.hal9k_flags)
         # TODO: validate all the required flags were found
         # Abort and return message and usage
 
