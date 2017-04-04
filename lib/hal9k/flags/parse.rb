@@ -61,6 +61,16 @@ module Hal9k
               #   echo --no-new-line
               # And only short inverts
               #   echo -n # Equivalent to --no-new-line
+
+              # TODO: This is getting kinda gross, maybe have multiple
+              # parsers where we determine the type, and parse
+              # appropriately
+              #
+              # Or maybe we could use currying with the new method on
+              # Flag to pass in the flag segment and/or value to more
+              # cleanly handle this parsing
+              #
+              # Or maybe just use another class to do some of this
               if matching_flag.type == Boolean
                 if Flag.short_flag_string?(flag_segment) || (Flag.long_flag_string?(flag_segment) && flag_segment.start_with?('--no'))
                   value = !value
