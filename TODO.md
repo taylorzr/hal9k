@@ -1,12 +1,14 @@
 ### TODO
 
-[ ] flag validation
+[ ] flags with = just the same as <SPACE>
 
-[ ] argument validation (arity)
+[ ] detailed flag validation with helpful error messaging
+
+[ ] basic argument validation
+
+[ ] detailed argument validation with helpful error messaging
 
 [ ] access arguments as array or hash
-
-[ ] flags with = just the same as <SPACE>
 
 [ ] combined short flags
 
@@ -31,6 +33,11 @@ at least allow this behavior
 
 [ ] consider having Namespace or Group or something in addition to commands
 like a command that can't be called
+
+[ ] Handle flags like `git rev-list -1 head` where "-1" is a numeric?
+
+[ ] handle flag values starting with dashes, e.g. `foo --bar '-baz'`
+    Don't think this is possible
 
 ---
 
@@ -65,3 +72,5 @@ or at least~~ SubCommand should be mount_to Root
 [x] short flag inverts boolean
 
 [x] long boolean "no" prefix, e.g. --no-new-line
+
+[x] basic flag validation

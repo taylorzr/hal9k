@@ -32,8 +32,9 @@ module Hal9k
       end
 
       def duplicate
-        # TODO
-        []
+        found
+          .group_by { |item| item }
+          .select { |key, value| value.count > 1 }.keys
       end
 
       private
