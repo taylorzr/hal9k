@@ -10,6 +10,7 @@ module Hal9k
           result = Result.new(flags)
 
           until argv.empty?
+            require 'pry'; binding.pry
             if Flag.flag_string?(argv.first)
               argv = extract(argv, flags, result)
             else
@@ -42,6 +43,14 @@ module Hal9k
             result.add_unknown(flag_segment)
             return argv
           end
+
+          # Handle --flag=value here?
+
+          # if flag includes =
+          # split at equals
+          # last part is the value
+          # now we have the problem that the flag value doesn't match
+          # the type
 
           has_value = argv.first && !Flag.flag_string?(argv.first) && matching_flag.type.matching_value?(argv.first)
 
@@ -84,6 +93,9 @@ module Hal9k
           end
 
           argv
+        end
+
+        def extract_flag(argv)
         end
       end
     end
