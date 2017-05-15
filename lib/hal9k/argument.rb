@@ -1,6 +1,6 @@
 module Hal9k
   class Argument
-    attr_reader :count
+    attr_reader :count, :name
 
     def initialize(name, type:, count: 1)
       self.name  = name
@@ -16,7 +16,7 @@ module Hal9k
 
     private
 
-    attr_accessor :name, :type
-    attr_writer :count
+    attr_accessor :type
+    attr_writer :count, :name
   end
 end

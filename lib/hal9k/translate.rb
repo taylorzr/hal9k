@@ -6,11 +6,14 @@ module Hal9k
 
         argv, result = Flags::Parse.call(argv, command.hal9k_flags)
 
+        # TODO: Don't abort until we try to parse arguments as well
         maybe_abort(result)
 
-        arguments = Arguments.parse(argv, command.hal9k_arguments)
+        outcome, arguments_result = Arguments.parse(argv, command.hal9k_arguments)
 
-        command.new(arguments, result.options, path)
+        maybe_abort_arguments(outcome, arguments_result)
+
+        command.new(arguments_result, result.options, path)
       end
 
       private
@@ -19,6 +22,10 @@ module Hal9k
         if [result.missing_value, result.missing, result.duplicate, result.unknown].any?(&:present?)
           abort 'Error parsing flags'
         end
+      end
+
+      def maybe_abort_arguments(outcome, result)
+        abort result if outcome == :fail
       end
     end
   end

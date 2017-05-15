@@ -4,9 +4,21 @@ module Hal9k
       def parse(argv, arguments)
         paired_arguments = pair(argv, arguments)
 
-        paired_arguments.map do |arg, argument|
+        missing_arguments = paired_arguments.select do |value, argument|
+          value.nil?
+        end
+
+        if missing_arguments.present?
+          missing_argument_list = missing_arguments.map(&:last).map(&:name).join(', ')
+
+          return [:fail, "Missing argument(s): #{missing_argument_list}"]
+        end
+
+        values = paired_arguments.map do |arg, argument|
           argument.parse(arg)
         end
+
+        [:ok, values]
       end
 
       private

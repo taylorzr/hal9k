@@ -10,7 +10,6 @@ module Hal9k
           result = Result.new(flags)
 
           until argv.empty?
-            require 'pry'; binding.pry
             if Flag.flag_string?(argv.first)
               argv = extract(argv, flags, result)
             else

@@ -4,13 +4,11 @@
 
 [ ] detailed flag validation with helpful error messaging
 
-[ ] basic argument validation
-
 [ ] detailed argument validation with helpful error messaging
 
 [ ] access arguments as array or hash
 
-[ ] combined short flags
+[ ] combined short flags, i.e. -abc == -a -b -c
 
 [ ] show help but exit with 1 status when mis-used
 
@@ -74,3 +72,5 @@ or at least~~ SubCommand should be mount_to Root
 [x] long boolean "no" prefix, e.g. --no-new-line
 
 [x] basic flag validation
+
+[x] basic argument validation
